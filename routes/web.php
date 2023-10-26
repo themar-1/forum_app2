@@ -1,22 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BackupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\entrepriseController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\QrCodeController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', fn () => view('index'))->name('acceuil');
 Route::get('/about', fn () => view('about'))->name('about');
@@ -35,6 +26,51 @@ Route::post('/getstagiairebycindatenaissanceinscription', [App\Http\Controllers\
 Route::post('/getstagiairebycindatenaissancereservation', [App\Http\Controllers\reservationController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissancereservation');
 Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionController::class, 'enregistrerInscription'])->name('enregistrerinscription');
 Route::get('/annulerinscription/{cin}', [App\Http\Controllers\inscriptionController::class, 'annulerInscription'])->name('annulerinscription');
+
+
+
+
+
+// Admin Routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', [AdminController::class, "index"])->name('index');
+    Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
+    Route::post('/auth', [AdminController::class, "handleLogin"])->name('handleLogin');
+    Route::post('/logout', [AdminController::class, "logout"])->name('logout');
+    Route::group(['prefix' => 'backup', 'as' => 'backup.'], function () {
+        Route::get('/', [BackupController::class, "index"])->name('index');
+        Route::post('/importStagiaires', [BackupController::class, "importStagiaires"])->name('importStagiaires');
+        Route::get('/exportStagiaires', [BackupController::class, "exportStagiaires"])->name('exportStagiaires');
+        Route::post('/importEntreprises', [BackupController::class, "importEntreprises"])->name('importEntreprises');
+        Route::get('/exportEntreprises', [BackupController::class, "exportEntreprises"])->name('exportEntreprises');
+        Route::post('/importEtablissements', [BackupController::class, "importEtablissements"])->name('importEtablissements');
+        Route::get('/exportEtablissements', [BackupController::class, "exportEtablissements"])->name('exportEtablissements');
+    });
+});
+
+
+
+// Stagiaires list
+Route::resource('stagiaires', StagiaireController::class);
+Route::resource('entreprises', EntrepriseController::class);
+Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
+Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

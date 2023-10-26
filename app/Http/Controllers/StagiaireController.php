@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class StagiaireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     public function index()
     {
-        //
+        return view("stagiaires.index", ["stagiaires" => stagiaire::all()]);
     }
 
     /**
@@ -34,11 +35,11 @@ class StagiaireController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Stagiaire $stagiaire)
+    public function show($stagiaire)
     {
-        //
+        return view("stagiaires.show", ["stagiaire" => stagiaire::findOrFail($stagiaire)]);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -52,8 +53,7 @@ class StagiaireController extends Controller
      */
     public function update(Request $request, Stagiaire $stagiaire)
     {
-        
-       
+        //
     }
 
     /**

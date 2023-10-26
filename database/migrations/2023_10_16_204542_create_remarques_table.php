@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('contenu');
             $table->unsignedBigInteger('entretien_id');
-            $table->string('entreprise_id');
+            $table->unsignedBigInteger('entreprise_id');
             $table->timestamps();
             $table->foreign('entretien_id')->references('id')->on('entretiens');
             $table->foreign('entreprise_id')->references('id')->on('entreprises');

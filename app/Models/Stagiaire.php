@@ -3,11 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
-class Stagiaire extends Model
+
+class Stagiaire extends Model implements Authenticatable
 {
-   // use HasFactory;
-    protected $fillable = ['matricule','nom','prenom','cin','datenaissance','email','tel1','tel2','tel3','filiere_id','status'];
+    use \Illuminate\Auth\Authenticatable;
+    use HasFactory;
 
+    public function getCV()
+    {
+        if ($this->cv) {
+            $pdf = Storage::disk('resumes')->get($this->cv);
+            return response($pdf, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $this->cv . '"',
+            ]);
+        }
+        return redirect()->back()->with(["error" => "Pas de CV trouvé."]);
+    }
 }

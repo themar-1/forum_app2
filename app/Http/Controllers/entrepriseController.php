@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Entreprise;
 use Illuminate\Http\Request;
 
-class entrepriseController extends Controller
+class EntrepriseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // public function __construct()
+    // {
+    //     $this->middleware("auth");
+    // }
     public function index()
     {
-       //
+        return view("entreprises.index", ["entreprises" => Entreprise::all()]);
     }
 
     /**
@@ -34,15 +35,15 @@ class entrepriseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Entreprise $entreprise)
+    public function show(string $entreprise)
     {
-        //
+        return view("entreprises.show", ["entreprise" => Entreprise::findOrFail($entreprise)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Entreprise $entreprise)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +51,7 @@ class entrepriseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Entreprise $entreprise)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +59,7 @@ class entrepriseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Entreprise $entreprise)
+    public function destroy(string $id)
     {
         //
     }
