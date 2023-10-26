@@ -26,15 +26,11 @@ Route::get('/invitation', fn () => view('invitation'))->name('invitation');
 Route::get('/contact', fn () => view('contact'))->name('contact');
 
 
-
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/qrcode', [qrCodeController::class, 'index']);
-
 Route::post('/getstagiairebycindatenaissanceinscription', [App\Http\Controllers\inscriptionController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissanceinscription');
 Route::post('/getstagiairebycindatenaissancereservation', [App\Http\Controllers\reservationController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissancereservation');
 Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionController::class, 'enregistrerInscription'])->name('enregistrerinscription');
@@ -50,15 +46,11 @@ Route::get('local', [LocalizationController::class, 'getLang'])->name('getlang')
 // Route qui permet de modifier la langue
 Route::get('local/{lang}', [LocalizationController::class, 'setLang'])->name('setlang');
 
-/*Route::resources([
-    'entreprises' => entrepriseController::class, 
-    'stagiaires' => entrepriseController::class, 
-  
-]); */
+Route::resources([
+    'stagiaires' => stagiaireController::class,
+    'entreprises' => entrepriseController::class,
 
-
-
-
+]);
 
 
 Route::get('/test-contact', function () {

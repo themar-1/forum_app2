@@ -1,5 +1,7 @@
 @extends('layouts.master', ['menu' => '33'])
-@section('title', 'Inscription')
+@section('title', 'Invitation')
+<link rel="stylesheet" href="{{ asset('css/ticket.css') }}">
+@vite([])
 @section('content')
 
     <!-- Debut Invitation  -->
@@ -22,6 +24,7 @@
             $stagiaire = Session('currentStagiaire');
         @endphp
     @endif
+
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
             <form method="post" action="/getstagiairebycindatenaissancereservation">
@@ -52,89 +55,121 @@
 
     <!-- debut affichage du stagiaire et envoi de la reservation -->
     @isset($stagiaire)
-
         <div class="container-xxl ">
-            <h4 class="text-center mb-2 wow fadeInUp" data-wow-delay="0.1s">Informations personnelles</h4>
+            <h4 class="text-center mb-2 wow fadeInUp" data-wow-delay="0.1s">Invitation</h4>
             <div class="row mt-1 g-4">
                 <div class="wow fadeInUp" data-wow-delay="0.5s">
-                    <form action="/qrcode" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="row">
-                                <div class="col-md-6 ps-md-5">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" name="nom" readonly
-                                            value="{{ $stagiaire->nom }}">
-                                        <label for="nom">Nom</label>
+
+                    <main id="elementToPrint" class="flex flex-col">
+                        <section class="w-full flex-grow flex items-center justify-center p-4">
+                            <div class="flex w-full max-w-3xl text-zinc-900 h-64">
+                                <div class="h-full bg-slate-200	 flex items-center justify-center px-8 rounded-l-3xl">
+                                    <div id="qrCode">
+                                        {{-- {!! QrCode::size(180)->generate(route('stagiaires.show', ['stagiaire' => $stagiaire->id])) !!} --}}
+                                        {!! QrCode::size(180)->generate('zefzef') !!}
                                     </div>
                                 </div>
-                                <div class="col-md-6 pe-md-5">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" name="prenom" readonly
-                                            value="{{ $stagiaire->prenom }}">
-                                        <label for="prenom">Pr&eacute;nom</label>
-                                    </div>
+                                <div
+                                    class="relative h-full flex flex-col items-center border-dashed justify-between border-2 bg-black border-white">
+                                    <div class="absolute rounded-full w-8 h-8 bg-white -top-5"></div>
+                                    <div class="absolute rounded-full w-8 h-8 bg-white -bottom-5"></div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 ps-md-5">
-                                    <div class="form-floating">
-                                        <input class="form-control" name="cin" placeholder="Votre CIN ?" readonly
-                                            value="{{ $stagiaire->cin }}">
-                                        <label for="email">cin</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 pe-md-5">
-                                    <div class="form-floating">
-                                        <input class="form-control" name="datenaissance" readonly
-                                            value="{{ $stagiaire->datenaissance }}">
-                                        <label for="datenaissance">Date de naissance</label>
-                                    </div>
-                                </div>
-                            </div>
-                            @if ($stagiaire->status === 0)
-                                <div class="row mt-3">
-                                    <div class="col-4 offset"></div>
-                                    <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">
-                                        <span> <b>Vous n'&ecirc;tes pas encore inscrit(e) </b> </span>
-                                        <A class="btn btn-primary py-3" href="/inscription">Aller sur page inscription</A>
-                                    </div>
-                                    <div class="col-3 offset"> </div>
-                                </div>
-                            @else
-                                <div class="row mt-3">
-                                    <div class="col-3 offset"></div>
-                                    <div class="col-6">
-                                        <div class="form-floating">
-                                            <span> <b>Vous avez d&eacute;ja des Rendez-vous enregistr&eacute;es </b> </span>
-                                            <input type="submit" class="btn btn-success" value="imprimer invitation">
+                                <div
+                                    class="h-full px-10 bg-slate-200 flex-grow rounded-r-3xl flex justify-content-start flex-col">
+                                    <div class="flex w-full mt-4 justify-between items-center">
+
+                                        <h1 id="title">Salon Régional de recrutement</h1>
+
+                                        <div class="flex flex-col items-start">
+                                            <img id="logo" src="{{ asset('img/logos/logo.png') }}" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-3 offset"></div>
+                                    <div class="d-flex flex-column ">
+                                        <h2 id="text" class="text-zinc-500">Location:</h2>
+                                        <span id="Location" class="font-mono">ISTA CFPMS (OFPPT) - Hay Hassani
+                                        </span>
+                                        <span class="font-mono">30 Novembre 2023 </span>
+                                    </div>
+                                    <div class="flex w-full mt-4 justify-between">
+                                        <div class="flex flex-col">
+                                            <span class="text-xs text-zinc-400">Nom Complet</span>
+                                            <span class="font-mono">{{ $stagiaire->prenom }}
+                                                {{ $stagiaire->nom }} </span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-xs text-zinc-400">CIN</span>
+                                            <span class="font-mono">{{ $stagiaire->cin }} </span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-xs text-zinc-400">Etablissement</span>
+                                            <span class="font-mono">ISGI</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-xs text-zinc-400">filiere</span>
+                                            <span class="font-mono">{{ $stagiaire->filiere }} </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            @endif
-                        </div>
-                    </form>
+                            </div>
+                        </section>
+                    </main>
+                    <div class="row">
+                        <div class="col-5 offset"></div>
+                        <a class="col-3 w-full btn btn-success" id="downloadBtn">Telecharger</a>
+                    </div>
+
+
+
                 </div>
             </div>
-        </div>
-    @else
-        <div class="row mt-3">
-            <div class="col-3 offset"></div>
-            <div class="bg-primary text-center col-6 ps-5 pe-5">
-                <H6> {{ __('Les informations entrees incorrectes ou (re)commencez la recherche ') }} </H6>
+        @else
+            <div class="row mt-3">
+                <div class="col-3 offset"></div>
+                <div class="bg-primary text-center col-6 ps-5 pe-5">
+                    <h6> {{ __('Les informations entrees incorrectes ou (re)commencez la recherche ') }} </h6>
+                </div>
+                <div class="col-3 offset"> </div>
             </div>
-            <div class="col-3 offset"> </div>
-        </div>
-
-    @endisset
+        @endisset
 
 
 
+        <!-- Fin Invitation  -->
 
-    <!-- Fin Invitation  -->
+    @endsection
 
-@endsection
+    <!-- Aller en haut -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-<!-- Aller en haut -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("downloadBtn").addEventListener("click", function() {
+                var element = document.getElementById("elementToPrint");
+
+                html2pdf(element, {
+                    margin: 10,
+                    filename: 'document.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    }
+                }).then(function(pdf) {
+                    var blob = pdf.output('blob');
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'document.pdf';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+            });
+        });
+    </script>

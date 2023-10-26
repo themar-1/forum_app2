@@ -1,7 +1,8 @@
 @extends('layouts.master', ['menu' => '31'])
 @section('title', 'Inscription')
-@section('content')
+@vite([''])
 
+@section('content')
     <!-- Debut inscription  -->
     <div class="container-xxl py-5 bg-dark page-header mb-2">
         <div class="container my-5 pt-2 pb-2">
@@ -55,8 +56,6 @@
 
     <!-- debut affichage du stagiaire et envoi de l'inscription -->
     @isset($stagiaire)
-
-
         <div class="container-xxl ">
             <h4 class="text-center mb-2 wow fadeInUp" data-wow-delay="0.1s">Informations personnelles</h4>
             <div class="row mt-1 g-4">
@@ -66,9 +65,14 @@
                         @csrf
 
                         <div class="row g-3">
-                            <div class="row">
-                                {{ session::has('success') ? session::get('success') : '' }}
-                            </div>
+                            @if (session::has('success'))
+                                <div class="row">
+                                    <div class="alert alert-success fade show m-auto" role="alert">
+
+                                        {{ session::get('success') }}
+                                    </div>
+                                </div>
+                            @endif
                             <div class="row">
                                 <div class="col-md-6 ps-md-5">
                                     <div class="form-floating">
@@ -128,14 +132,19 @@
                                 </div>
                             @else
                                 <div class="row mt-3">
-                                    <div class="col-4 offset"></div>
-                                    <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">
+                                    <div class="col-3 offset"></div>
+                                    <div class="text-center col-6 pt-2 pb-2 ps-3 pe-3">
                                         <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
-                                        <A class="btn btn-success" href="/annulerinscription/{{ $stagiaire->cin }}">Annuler
-                                            inscription</A>
-
+                                        <a class="btn btn-success" href="{{ route('invitation') }}">Imprimer mon invitation</a>
+                                        <a class="btn btn-danger" href="{{ route('invitation') }}">Annuler inscription</a>
                                     </div>
-                                    <div class="col-3 offset"> </div>
+                                    {{-- <div class="col-4 offset"></div> --}}
+                                    {{-- <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">
+                                        <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
+                                        <a class="btn btn-success" href="/annulerinscription/{{ $stagiaire->cin }}">Annuler
+                                            inscription</a>
+                                    </div>
+                                    <div class="col-3 offset"> </div> --}}
 
                                 </div>
                             @endif
@@ -152,7 +161,6 @@
             </div>
             <div class="col-3 offset"> </div>
         </div>
-
     @endisset
 
     <!-- fin affichage du stagiaire et envoi de l'inscription -->
