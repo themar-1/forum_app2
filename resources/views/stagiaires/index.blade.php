@@ -8,7 +8,7 @@
             <ul>
                 @foreach ($stagiaires as $stagiaire)
                     <li>
-                        <a href="{{ route('stagiaires.show', ['stagiaire' => $stagiaire['id']]) }}">
+                        <a href="{{ route('stagiaires.show', ['stagiaire' => $stagiaire->cin]) }}">
                             matricule:{{ $stagiaire['matricule'] }} | nom:{{ $stagiaire['nom'] }} |
                             prenom:{{ $stagiaire['prenom'] }}
                         </a>

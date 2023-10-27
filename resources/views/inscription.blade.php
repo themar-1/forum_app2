@@ -24,6 +24,8 @@
         @endphp
     @endif
 
+    {{ $stagiaire }}
+
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
             <form method="post" action="/getstagiairebycindatenaissanceinscription">
@@ -39,7 +41,7 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control border-0" name="datenaissance"
                                     placeholder="Date naissance ?"
-                                    value="{{ isset($stagiaire) ? $stagiaire->datenaissance : '' }}" />
+                                    value="{{ isset($stagiaire) ? $stagiaire->dateNaissance : '' }}" />
                             </div>
                         </div>
                     </div>
@@ -68,7 +70,6 @@
                             @if (session::has('success'))
                                 <div class="row">
                                     <div class="alert alert-success fade show m-auto" role="alert">
-
                                         {{ session::get('success') }}
                                     </div>
                                 </div>
@@ -100,20 +101,20 @@
                                 <div class="col-md-6 pe-md-5">
                                     <div class="form-floating">
                                         <input class="form-control" name="datenaissance" readonly
-                                            value="{{ $stagiaire->datenaissance }}">
+                                            value="{{ $stagiaire->dateNaissance }}">
                                         <label for="datenaissance">Date de naissance</label>
                                     </div>
                                 </div>
                             </div>
-                            @if ($stagiaire->status === 0)
-                                <div class="row">
-                                    <div class="col-md-6 ps-md-5 ">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" name="email" readonly
-                                                placeholder="Vote Email ?" value="{{ $stagiaire->email }}">
-                                            <label for="email">Email (&acirc; changer si n&eacute;cessaire)</label>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-6 ps-md-5 ">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" name="email" readonly
+                                            placeholder="Vote Email ?" value="{{ $stagiaire->email }}">
+                                        <label for="email">Email</label>
                                     </div>
+                                </div>
+                                @if ($stagiaire->status === 0)
                                     <div class="col-md-4  ">
                                         <div class="form-floating">
                                             <input class="form-control" type="file" name="cv"
@@ -129,24 +130,24 @@
 
                                         </div>
                                     </div>
+                            </div>
+                        @else
+                            <div class="row mt-3">
+                                <div class="col-3 offset"></div>
+                                <div class="text-center col-6 pt-2 pb-2 ps-3 pe-3">
+                                    <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
+                                    <a class="btn btn-success" href="{{ route('invitation') }}">Imprimer mon invitation</a>
+                                    <a class="btn btn-danger" href="{{ route('invitation') }}">Annuler inscription</a>
                                 </div>
-                            @else
-                                <div class="row mt-3">
-                                    <div class="col-3 offset"></div>
-                                    <div class="text-center col-6 pt-2 pb-2 ps-3 pe-3">
-                                        <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
-                                        <a class="btn btn-success" href="{{ route('invitation') }}">Imprimer mon invitation</a>
-                                        <a class="btn btn-danger" href="{{ route('invitation') }}">Annuler inscription</a>
-                                    </div>
-                                    {{-- <div class="col-4 offset"></div> --}}
-                                    {{-- <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">
+                                {{-- <div class="col-4 offset"></div> --}}
+                                {{-- <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">
                                         <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
                                         <a class="btn btn-success" href="/annulerinscription/{{ $stagiaire->cin }}">Annuler
                                             inscription</a>
                                     </div>
                                     <div class="col-3 offset"> </div> --}}
 
-                                </div>
+                            </div>
                             @endif
                         </div>
                     </form>

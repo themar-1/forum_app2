@@ -9,7 +9,9 @@
         <ul>
             <li><a href="{{ route('stagiaires.index') }}">Stagiaire List</a></li>
             <li><a href="{{ route('entreprises.index') }}">Entreprise List</a></li>
-            <li><a href="{{ route('admin.backup.index') }}">Backup</a></li>
+            @if (Auth::user()->hasRole(1))
+                <li><a href="{{ route('admin.backup.index') }}">Backup</a></li>
+            @endif
         </ul>
         <form action="{{ route('admin.logout') }}" method="POST">
             @csrf

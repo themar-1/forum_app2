@@ -44,17 +44,12 @@ class AdminController extends Controller
     public function viewCv(Request $request)
     {
         $fileName = $request->input("fileName");
-        $filePath = 'resumes/' . $fileName;
-
-        if (Storage::disk('local')->exists($filePath)) {
-            $file = storage_path("app/" . $filePath);
-
-            // Set the appropriate content type and headers for PDF
+        if (Storage::disk('local')->exists($fileName)) {
+            $file = storage_path("app/" . $fileName);
             $headers = [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="' . $fileName . '"',
             ];
-
             return response()->file($file, $headers);
         } else
             return redirect()->back()->with('error', 'CV file not found.');

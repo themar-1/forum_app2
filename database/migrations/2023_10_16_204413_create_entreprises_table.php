@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('nom')->unique();
             $table->string('representant');
             $table->string('activite');
-            $table->string('logo');
+            $table->string('raisonsociale')->nullable();
+            $table->string('raisonabregee')->nullable();
+            $table->string('logo')->nullable();
             $table->string('web')->nullable();
             $table->string('email')->unique();
             $table->string('password');

@@ -13,6 +13,15 @@ class Entreprise extends Model implements Authenticatable
     use HasFactory;
     protected $table = 'entreprises';
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->password = Hash::make($model->nom . $model->representant);
+        });
+    }
+
     protected $hidden = [
         'password',
     ];

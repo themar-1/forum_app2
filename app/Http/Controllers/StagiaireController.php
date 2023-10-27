@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StagiaireController extends Controller
 {
@@ -35,9 +36,13 @@ class StagiaireController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($stagiaire)
+    public function show($cin)
     {
-        return view("stagiaires.show", ["stagiaire" => stagiaire::findOrFail($stagiaire)]);
+        $stg = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
+            ->select('stagiaires.*', 'etablissements.nom as efp')
+            ->where('cin', $cin)
+            ->firstOrFail();
+        return view("stagiaires.show", ["stagiaire" => $stg]);
     }
 
     /**
@@ -62,5 +67,16 @@ class StagiaireController extends Controller
     public function destroy(Stagiaire $stagiaire)
     {
         //
+    }
+    public function marquerPresent($cin)
+    {
+        try {
+            $stg = Stagiaire::where('cin', $cin)->firstOrFail();
+            $stg->status = 2;
+            $stg->save();
+            return back();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'Stagiaire non trouvé.'], 404);
+        }
     }
 }

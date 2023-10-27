@@ -37,9 +37,9 @@
                                     value="{{ isset($stagiaire) ? $stagiaire->cin : '' }}" />
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control border-0" name="datenaissance"
+                                <input type="date" class="form-control border-0" name="datenaissance"
                                     placeholder="Date naissance ?"
-                                    value="{{ isset($stagiaire) ? $stagiaire->datenaissance : '' }}" />
+                                    value="{{ isset($stagiaire) ? $stagiaire->dateNaissance : '' }}" />
                             </div>
                         </div>
                     </div>
@@ -65,8 +65,7 @@
                             <div class="flex w-full max-w-3xl text-zinc-900 h-64">
                                 <div class="h-full bg-slate-200	 flex items-center justify-center px-8 rounded-l-3xl">
                                     <div id="qrCode">
-                                        {{-- {!! QrCode::size(180)->generate(route('stagiaires.show', ['stagiaire' => $stagiaire->id])) !!} --}}
-                                        {!! QrCode::size(180)->generate('zefzef') !!}
+                                        {!! QrCode::size(180)->generate(route('stagiaires.show', ['stagiaire' => $stagiaire->cin])) !!}
                                     </div>
                                 </div>
                                 <div
@@ -102,7 +101,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <span class="text-xs text-zinc-400">Etablissement</span>
-                                            <span class="font-mono">ISGI</span>
+                                            <span class="font-mono">{{ $stagiaire->efp }} </span>
                                         </div>
                                         <div class="flex flex-col">
                                             <span class="text-xs text-zinc-400">filiere</span>
