@@ -49,9 +49,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 });
 
 Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
-Route::get('/generate-pdf', [PdfController::class,"generatePdf"])->name('generatepdf');
 
 
+
+Route::post('/entreprise/login', [entrepriseController::class, 'login'])->name('entreprise.login');
+Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
 
 
 // Stagiaires list

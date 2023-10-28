@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entreprise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class EntrepriseController extends Controller
 {
@@ -56,12 +58,40 @@ class EntrepriseController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         //
     }
+    public function login(Request $request)
+    {
     
-}
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+
+
+
+        if (Auth::guard('entreprise')->attempt($credentials)) {
+          
+            $user = Auth::guard('entreprise')->user();
+            $user->status = 1; 
+            $user->save(); 
+
+           
+            return redirect()->route('entreprise.dashboard');
+        }
+
+      
+        throw ValidationException::withMessages([
+            'email' => [trans('auth.failed')],
+        ]);
+    }
+        public function dashboard()
+            {
+                
+                return view('entreprises.dashboard'); 
+                
+            }
+ }
