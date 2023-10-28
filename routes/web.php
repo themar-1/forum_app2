@@ -9,12 +9,12 @@ use App\Http\Controllers\entrepriseController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\QrCodeController;
 
-Route::get('/', fn () => view('index'))->name('acceuil');
-Route::get('/about', fn () => view('about'))->name('about');
-Route::get('/inscription', fn () => view('inscription'))->name('inscription');
-Route::get('/reservationrdv', fn () => view('reservationrdv'))->name('reservationrdv');
-Route::get('/invitation', fn () => view('invitation'))->name('invitation');
-Route::get('/contact', fn () => view('contact'))->name('contact');
+Route::get('/', fn() => view('index'))->name('acceuil');
+Route::get('/about', fn() => view('about'))->name('about');
+Route::get('/inscription', fn() => view('inscription'))->name('inscription');
+Route::get('/reservationrdv', fn() => view('reservationrdv'))->name('reservationrdv');
+Route::get('/invitation', fn() => view('invitation'))->name('invitation');
+Route::get('/contact', fn() => view('contact'))->name('contact');
 
 
 Auth::routes();
@@ -33,6 +33,7 @@ Route::get('/annulerinscription/{cin}', [App\Http\Controllers\inscriptionControl
 
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/student/delete/{id}', [AdminController::class, 'deleteStudent'])->name('student.delete');
     Route::get('/', [AdminController::class, "index"])->name('index');
     Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
     Route::post('/auth', [AdminController::class, "handleLogin"])->name('handleLogin');
@@ -45,6 +46,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/exportEntreprises', [BackupController::class, "exportEntreprises"])->name('exportEntreprises');
         Route::post('/importEtablissements', [BackupController::class, "importEtablissements"])->name('importEtablissements');
         Route::get('/exportEtablissements', [BackupController::class, "exportEtablissements"])->name('exportEtablissements');
+    });
+    Route::group(['prefix' => 'ajouter', 'as' => 'ajouter.'], function () {
+        Route::get('/stagiaire', [AdminController::class, "AjouterStagiaire"])->name('ajouter_S');
+        Route::get('/entreprises', [AdminController::class, "AjouterEntreprises"])->name('ajouter_E');
+        Route::get('/admin', [AdminController::class, "AjouterAdmin"])->name('ajouter_A');
+        Route::post('/addAdmin', [AdminController::class, "add_a"])->name('add_A');
+        
+
     });
 });
 
