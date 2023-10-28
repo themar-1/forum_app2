@@ -170,6 +170,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+ 
+
 
     ])->toArray(),
 
@@ -189,6 +191,8 @@ return [
 
 
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+ 
+
 
     ])->toArray(),
 

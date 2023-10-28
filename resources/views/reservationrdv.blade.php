@@ -49,52 +49,64 @@
         </div>
     </div>
 
-    <!-- Fin recherche by cin et date naissance -->
-
-    <!-- debut affichage du stagiaire et envoi de la reservation -->
     @isset($stagiaire)
-
-        <div class="container-xxl ">
-            <h4 class="text-center mb-2 wow fadeInUp" data-wow-delay="0.1s">Informations personnelles</h4>
-            <div class="row mt-1 g-4">
-                <div class="wow fadeInUp" data-wow-delay="0.5s">
-                    <form action="/enregistrerinscription" method="post" enctype="multipart/form-data">
-                        @method('PATCH')
-                        @csrf
-
-                        <div class="row g-3">
-                            <div class="row">
-                                <div class="col-md-6 ps-md-5">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" name="nom" readonly
-                                            value="{{ $stagiaire->nom }}">
-                                        <label for="nom">Nom</label>
+    <?php
+    $entreprises = App\Models\Entreprise::all();
+    $hasParticipatingCompanies = false; 
+    ?>
+    
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            @if ($entreprises->count() > 0)
+                <h1 class="text-center mb-5">Les Entreprises Participantes</h1>
+    
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+    
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+    
+                <div class="d-flex flex-row justify-content-between flex-wrap">
+                    <div class="owl-carousel testimonial-carousel">
+                        @foreach ($entreprises as $entreprise)
+                            @if ($entreprise->status === 0)
+                                <div class="testimonial-item bg-light rounded p-4">
+                                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                                    <p>{{$entreprise->raisonsociale}}</p>
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-fluid flex-shrink-0 rounded" src="{{ asset('img/logos/'.$entreprise->logo) }}" style="width: 50px; height: 50px;">
+                                        <div class="ps-3">
+                                            <h5 class="mb-1">{{$entreprise->raisonabregee}}</h5>
+                                            <a href="http://{{$entreprise->web}}"><small>{{$entreprise->web}}</small></a>
+                                            <div class="d-flex justify-content-end">
+                                                <form method="POST" action="{{ route('apply-for-interview', ['entrepriseId' => $entreprise->id]) }}">
+                                                    @csrf
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-primary">Postuler</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 pe-md-5">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" name="prenom" readonly
-                                            value="{{ $stagiaire->prenom }}">
-                                        <label for="prenom">Pr&eacute;nom</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 ps-md-5">
-                                    <div class="form-floating">
-                                        <input class="form-control" name="cin" placeholder="Votre CIN ?" readonly
-                                            value="{{ $stagiaire->cin }}">
-                                        <label for="email">cin</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 pe-md-5">
-                                    <div class="form-floating">
-                                        <input class="form-control" name="datenaissance" readonly
-                                            value="{{ $stagiaire->datenaissance }}">
-                                        <label for="datenaissance">Date de naissance</label>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php $hasParticipatingCompanies = true; ?>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            @if (!$hasParticipatingCompanies)
+                <h1 class="text-center mb-5">Pas d'entreprises participantes</h1>
+            @endif
+        </div>
+    </div>
+    
                             @if ($stagiaire->status === 0)
                                 <div class="row mt-3">
                                     <div class="col-4 offset"></div>
