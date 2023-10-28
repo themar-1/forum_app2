@@ -13,12 +13,12 @@ class inscriptionController extends Controller
     public function getstagiairebycindatenaissance(Request $request)
     {
 
-        $stg = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
+        $stagiaire = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
             ->select('stagiaires.*', 'etablissements.nom as efp')
             ->where('cin', $request->get('cin'))
             ->where('dateNaissance', $request->get('datenaissance'))->first();
 
-        return view("stagiaires.show", ["stagiaire" => $stg]);
+        // return view("stagiaires.show", ["stagiaire" => $stg]);
 
         if (isset($stagiaire))
             Session::put('currentStagiaire', $stagiaire);

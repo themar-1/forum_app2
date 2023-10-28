@@ -23,8 +23,8 @@
             $stagiaire = Session('currentStagiaire');
         @endphp
     @endif
-
-    {{ $stagiaire }}
+{{-- 
+    {{ $stagiaire }} --}}
 
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">

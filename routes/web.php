@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\entrepriseController;
 use App\Http\Controllers\StagiaireController;
-
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\PdfController;
 
 Route::get('/', fn () => view('index'))->name('acceuil');
 Route::get('/about', fn () => view('about'))->name('about');
@@ -47,11 +48,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     });
 });
 
+Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
+Route::get('/generate-pdf', [PdfController::class,"generatePdf"])->name('generatepdf');
+
+
 
 
 // Stagiaires list
 Route::resource('stagiaires', StagiaireController::class);
-Route::resource('entreprises', EntrepriseController::class);
+Route::resource('entreprises', entrepriseController::class);
+Route::post("/login",[entrepriseController::class,"handlelogin"])->name('login');
 Route::post('/presence/{cin}', [StagiaireController::class, 'marquerPresent'])->name('marquerPresent');
 Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
 Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
@@ -77,6 +83,7 @@ Route::resources([
     'entreprises' => entrepriseController::class,
 
 ]);
+
 
 
 Route::get('/test-contact', function () {
