@@ -7,7 +7,7 @@
         <div class="form">
             <form id="admin_login__form" class="login-form" action="{{ route('admin.handleLogin') }}" method="POST">
                 @csrf
-                <input class="@error('login') invalid @enderror" type="text" placeholder="email" name="login" />
+                <input class="@error('login') invalid @enderror" type="text" placeholder="Username" name="login" />
                 @error('login')
                     <span>{{ $message }}</span>
                 @enderror

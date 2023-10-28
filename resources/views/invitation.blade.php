@@ -24,6 +24,7 @@
             $stagiaire = Session('currentStagiaire');
         @endphp
     @endif
+    {{-- {{ $stagiaire }} --}}
 
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
@@ -139,37 +140,4 @@
 
     <!-- Aller en haut -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("downloadBtn").addEventListener("click", function() {
-                var element = document.getElementById("elementToPrint");
-
-                html2pdf(element, {
-                    margin: 10,
-                    filename: 'document.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 2
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait'
-                    }
-                }).then(function(pdf) {
-                    var blob = pdf.output('blob');
-                    var url = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'document.pdf';
-                    a.click();
-                    URL.revokeObjectURL(url);
-                });
-            });
-        });
-    </script>

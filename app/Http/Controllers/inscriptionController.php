@@ -18,11 +18,7 @@ class inscriptionController extends Controller
             ->where('cin', $request->get('cin'))
             ->where('dateNaissance', $request->get('datenaissance'))->first();
 
-        // return view("stagiaires.show", ["stagiaire" => $stg]);
-
-        if (isset($stagiaire))
-            Session::put('currentStagiaire', $stagiaire);
-        else Session::forget('currentStagiaire');
+        $stagiaire ? Session::put('currentStagiaire', $stagiaire) : Session::forget('currentStagiaire');
 
         return view('inscription', compact('stagiaire'));
     }
@@ -36,7 +32,7 @@ class inscriptionController extends Controller
             'email' => 'required'
         ]);
         $stagiaire = Stagiaire::where('cin', $request->get('cin'))->first();
-        $stagiaire->email = $request->get('email');
+        // $stagiaire->email = $request->get('email');
         $stagiaire->status = 1;
 
         if (isset($stagiaire))
@@ -46,7 +42,6 @@ class inscriptionController extends Controller
             $file = $request->file('cv');
 
             if ($stagiaire->cv) {
-                // Supprimez le CV précédemment téléchargé, si disponible
                 Storage::delete($stagiaire->cv);
             }
 
