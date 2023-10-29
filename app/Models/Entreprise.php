@@ -32,6 +32,7 @@ class Entreprise extends Model implements Authenticatable
     protected $fillable = [
         'nom',
         'representant',
-        'email'
+        'email',
+        'status'
     ];
 }
