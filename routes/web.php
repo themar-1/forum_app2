@@ -30,9 +30,9 @@ Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionControl
 
 
 
-
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/student/delete/{id}', [AdminController::class, 'deleteStudent'])->name('student.delete');
     Route::get('/', [AdminController::class, "index"])->name('index');
     Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
     Route::post('/auth', [AdminController::class, "handleLogin"])->name('handleLogin');
@@ -46,11 +46,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/importEtablissements', [BackupController::class, "importEtablissements"])->name('importEtablissements');
         Route::get('/exportEtablissements', [BackupController::class, "exportEtablissements"])->name('exportEtablissements');
     });
+    Route::group(['prefix' => 'ajouter', 'as' => 'ajouter.'], function () {
+        Route::get('/stagiaire', [AdminController::class, "ajouterStagiaire"])->name('ajouter_S');
+        Route::get('/entreprise', [AdminController::class, "ajouterEntreprise"])->name('ajouter_E');
+        Route::get('/admin', [AdminController::class, "ajouterAdmin"])->name('ajouter_A');
+        Route::post('/addAdmin', [AdminController::class, "add_a"])->name('add_A');
+        Route::post('/addEntreprises', [AdminController::class, "add_e"])->name('add_E');
+    });
 });
 
 Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
-
-
 
 Route::post('/entreprise/login', [entrepriseController::class, 'login'])->name('entreprise.login');
 Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
@@ -59,7 +64,7 @@ Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])-
 // Stagiaires list
 Route::resource('stagiaires', StagiaireController::class);
 Route::resource('entreprises', entrepriseController::class);
-Route::post("/login",[entrepriseController::class,"handlelogin"])->name('login');
+Route::post("/login", [entrepriseController::class, "handlelogin"])->name('login');
 Route::post('/presence/{cin}', [StagiaireController::class, 'marquerPresent'])->name('marquerPresent');
 Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
 Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');

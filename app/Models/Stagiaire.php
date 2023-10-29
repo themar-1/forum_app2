@@ -13,7 +13,6 @@ class Stagiaire extends Model implements Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
     use HasFactory;
-
     public function getCV()
     {
         if ($this->cv) {
