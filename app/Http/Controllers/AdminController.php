@@ -10,6 +10,7 @@ use App\Models\Entreprise;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -23,20 +24,23 @@ class AdminController extends Controller
     {
 
         return view('admin.login');
-
     }
 
     public function dashboard()
     {
 
-        $stg = Stagiaire::all();
-        $Entreprise = Entreprise::count();
+        $stg = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
+            ->select('stagiaires.*', 'etablissements.nom as efp')->get();
+
+        $entreprises = Entreprise::all();
+
         $loginaction = Stagiaire::where('status', 1)
             ->orWhere('status', 2)
             ->get();
-        $Entretien = Stagiaire::where('status', 2)->get();
-        return view('admin.index', ['temp' => 1, 'stg' => $stg, 'Entreprise' => $Entreprise, 'loginaction' => $loginaction, 'Entretien' => $Entretien]);
 
+        $entretien = Stagiaire::where('status', 2)->get();
+
+        return view('admin.index', ['temp' => 1, 'stg' => $stg, 'entreprises' => $entreprises, 'loginaction' => $loginaction, 'Entretien' => $entretien]);
     }
     public function handleLogin(Request $request)
     {
@@ -81,17 +85,17 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
-    public function AjouterAdmin()
+    public function ajouterAdmin()
     {
 
         return view('admin.index', ['temp' => 2]);
     }
-    public function AjouterEntreprises()
+    public function ajouterEntreprise()
     {
 
         return view('admin.index', ['temp' => 3]);
     }
-    public function AjouterStagiaire()
+    public function ajouterStagiaire()
     {
 
         return view('admin.index', ['temp' => 4]);
@@ -105,16 +109,37 @@ class AdminController extends Controller
         ]);
         $admin = new admin();
         $admin->login = strip_tags($request->input('name'));
-        $admin->password = strip_tags($request->input('password'));
+        $admin->password = Hash::make(strip_tags($request->input('password')));
         $admin->role = 1;
         $admin->save();
 
         return redirect()->back();
     }
 
+    public function add_e(Request $request)
+    {
 
+        $request->validate([
+            'nom' => 'required|string|max:50',
+            'representant' => 'required|string|max:50',
+            'activite' => 'required|string|max:255',
+            'logo' => 'required|url',
+            'web' => 'required|url',
+            'email' => 'required|email|max:255',
+            // 'password' => 'required|min:6|max:15',
+            'stand' => 'required|integer|max:10',
+        ]);
+        $entreprises = new Entreprise();
+        $entreprises->nom = strip_tags($request->input('nom'));
+        $entreprises->representant = strip_tags($request->input('representant'));
+        $entreprises->activite = strip_tags($request->input('activite'));
+        $entreprises->logo = strip_tags($request->input('logo'));
+        $entreprises->web = strip_tags($request->input('web'));
+        // $entreprises->password = Hash::make(strip_tags($request->input('web')));
+        $entreprises->email = strip_tags($request->input('email'));
+        $entreprises->stand = strip_tags($request->input('stand'));
+        $entreprises->save();
 
-
-
-
+        return redirect()->back();
+    }
 }

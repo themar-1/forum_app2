@@ -10,12 +10,12 @@ use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\PdfController;
 
-Route::get('/', fn() => view('index'))->name('acceuil');
-Route::get('/about', fn() => view('about'))->name('about');
-Route::get('/inscription', fn() => view('inscription'))->name('inscription');
-Route::get('/reservationrdv', fn() => view('reservationrdv'))->name('reservationrdv');
-Route::get('/invitation', fn() => view('invitation'))->name('invitation');
-Route::get('/contact', fn() => view('contact'))->name('contact');
+Route::get('/', fn () => view('index'))->name('acceuil');
+Route::get('/about', fn () => view('about'))->name('about');
+Route::get('/inscription', fn () => view('inscription'))->name('inscription');
+Route::get('/reservationrdv', fn () => view('reservationrdv'))->name('reservationrdv');
+Route::get('/invitation', fn () => view('invitation'))->name('invitation');
+Route::get('/contact', fn () => view('contact'))->name('contact');
 
 
 Auth::routes();
@@ -26,7 +26,6 @@ Route::post('/getstagiairebycindatenaissanceinscription', [App\Http\Controllers\
 Route::post('/getstagiairebycindatenaissancereservation', [App\Http\Controllers\reservationController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissancereservation');
 Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionController::class, 'enregistrerInscription'])->name('enregistrerinscription');
 // Route::get('/annulerinscription/{cin}', [App\Http\Controllers\inscriptionController::class, 'annulerInscription'])->name('annulerinscription');
-
 
 
 
@@ -48,17 +47,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/exportEtablissements', [BackupController::class, "exportEtablissements"])->name('exportEtablissements');
     });
     Route::group(['prefix' => 'ajouter', 'as' => 'ajouter.'], function () {
-        Route::get('/stagiaire', [AdminController::class, "AjouterStagiaire"])->name('ajouter_S');
-        Route::get('/entreprises', [AdminController::class, "AjouterEntreprises"])->name('ajouter_E');
-        Route::get('/admin', [AdminController::class, "AjouterAdmin"])->name('ajouter_A');
+        Route::get('/stagiaire', [AdminController::class, "ajouterStagiaire"])->name('ajouter_S');
+        Route::get('/entreprise', [AdminController::class, "ajouterEntreprise"])->name('ajouter_E');
+        Route::get('/admin', [AdminController::class, "ajouterAdmin"])->name('ajouter_A');
         Route::post('/addAdmin', [AdminController::class, "add_a"])->name('add_A');
-        
-
+        Route::post('/addEntreprises', [AdminController::class, "add_e"])->name('add_E');
     });
 });
 
 Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
-Route::get('/generate-pdf', [PdfController::class,"generatePdf"])->name('generatepdf');
+// Route::get('/generate-pdf', [PdfController::class,"generatePdf"])->name('generatepdf');
 
 
 
@@ -66,7 +64,7 @@ Route::get('/generate-pdf', [PdfController::class,"generatePdf"])->name('generat
 // Stagiaires list
 Route::resource('stagiaires', StagiaireController::class);
 Route::resource('entreprises', entrepriseController::class);
-Route::post("/login",[entrepriseController::class,"handlelogin"])->name('login');
+Route::post("/login", [entrepriseController::class, "handlelogin"])->name('login');
 Route::post('/presence/{cin}', [StagiaireController::class, 'marquerPresent'])->name('marquerPresent');
 Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
 Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
