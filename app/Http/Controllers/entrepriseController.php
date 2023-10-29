@@ -65,7 +65,7 @@ class EntrepriseController extends Controller
     }
     public function login(Request $request)
     {
-    
+
         $credentials = [
             'email' => $request->input('email'),
             'password' => $request->input('password'),
@@ -74,24 +74,27 @@ class EntrepriseController extends Controller
 
 
         if (Auth::guard('entreprise')->attempt($credentials)) {
-          
-            $user = Auth::guard('entreprise')->user();
-            $user->status = 1; 
-            $user->save(); 
 
-           
+            $user = Auth::guard('entreprise')->user();
+            $user->status = 1;
+            $user->save();
+
+
             return redirect()->route('entreprise.dashboard');
         }
 
-      
+
         throw ValidationException::withMessages([
             'email' => [trans('auth.failed')],
         ]);
     }
-        public function dashboard()
-            {
-                
-                return view('entreprises.dashboard'); 
-                
-            }
- }
+    public function loginIndex(Request $request)
+    {
+        return view("auth.login");
+    }
+    public function dashboard()
+    {
+
+        return view('entreprises.dashboard');
+    }
+}

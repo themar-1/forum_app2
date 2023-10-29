@@ -5,10 +5,9 @@ use App\Http\Controllers\BackupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocalizationController;
-use App\Http\Controllers\entrepriseController;
+use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\PdfController;
 
 Route::get('/', fn () => view('index'))->name('acceuil');
 Route::get('/about', fn () => view('about'))->name('about');
@@ -20,7 +19,6 @@ Route::get('/contact', fn () => view('contact'))->name('contact');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/getstagiairebycindatenaissanceinscription', [App\Http\Controllers\inscriptionController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissanceinscription');
 Route::post('/getstagiairebycindatenaissancereservation', [App\Http\Controllers\reservationController::class, 'getstagiairebycindatenaissance'])->name('getstagiairebycindatenaissancereservation');
@@ -57,14 +55,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
 
-Route::post('/entreprise/login', [entrepriseController::class, 'login'])->name('entreprise.login');
+Route::get('/login', [EntrepriseController::class, 'loginIndex'])->name('login');
+Route::post('/login', [EntrepriseController::class, 'login'])->name('login.action');
 Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
 
 
 // Stagiaires list
 Route::resource('stagiaires', StagiaireController::class);
 Route::resource('entreprises', entrepriseController::class);
-Route::post("/login", [entrepriseController::class, "handlelogin"])->name('login');
 Route::post('/presence/{cin}', [StagiaireController::class, 'marquerPresent'])->name('marquerPresent');
 Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
 Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
@@ -77,6 +75,11 @@ Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
 
 
 
+Route::resources([
+    'stagiaires' => stagiaireController::class,
+    'entreprises' => entrepriseController::class,
+
+]);
 
 
 // Route qui permet de connaître la langue active
@@ -85,11 +88,6 @@ Route::get('local', [LocalizationController::class, 'getLang'])->name('getlang')
 // Route qui permet de modifier la langue
 Route::get('local/{lang}', [LocalizationController::class, 'setLang'])->name('setlang');
 
-Route::resources([
-    'stagiaires' => stagiaireController::class,
-    'entreprises' => entrepriseController::class,
-
-]);
 
 
 

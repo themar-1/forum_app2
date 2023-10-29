@@ -40,23 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'entreprise' => [ 
+        'entreprise' => [
             'driver' => 'session',
             'provider' => 'entreprises',
         ],
     ],
-    
-    'providers' => [
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Admin::class,
-        ],
-        'entreprises' => [ 
-            'driver' => 'eloquent',
-            'model' => App\Models\Entreprise::class,
-        ],
-    ],
-    
+
+
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -73,6 +64,18 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+
+    'providers' => [
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        'entreprises' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Entreprise::class,
+        ],
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
