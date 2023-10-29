@@ -15,14 +15,18 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link"><span class="pcoded-micon"><i
-                                class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                                class="feather icon-home"></i></span><span class="pcoded-mtext">Tableau de
+                            bord</span></a>
                 </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>action</label>
+                <li class="nav-item">
+                    <a href="{{ route('admin.analytics') }}" class="nav-link"><span class="pcoded-micon"><i
+                                class="feather icon-bar-chart-2"></i></span><span
+                            class="pcoded-mtext">Analyse</span></a>
                 </li>
+
                 <li class="nav-item pcoded-hasmenu">
                     <a class="nav-link cursor-pointer"><span class="pcoded-micon"><i
-                                class="feather icon-box"></i></span><span class="pcoded-mtext">Ajouter</span></a>
+                                class="feather icon-user-plus"></i></span><span class="pcoded-mtext">Ajouter</span></a>
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{ route('admin.ajouter.ajouter_A') }}" class="">Ajouter
                                 Admin</a></li>
@@ -33,8 +37,8 @@
 
                     </ul>
                 </li>
-
-                <li class="nav-item pcoded-menu-caption cursor-pointer">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>action</label>
                 </li>
                 <div>
                     <li class="nav-item bg-danger">
@@ -45,7 +49,7 @@
                                     <span class="pcoded-micon">
                                         <i class="feather icon-power"></i>
                                     </span>
-                                    <span class="pcoded-mtext">Logout</span>
+                                    <span class="pcoded-mtext">Se déconnecter</span>
                                 </button>
                             </form>
                         </a>

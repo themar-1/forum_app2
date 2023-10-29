@@ -20,8 +20,8 @@
          </div>
      </div>
 
-     @include('admin/includes/navMenu')
-     @include('admin/includes/header')
+     @include('includes/adminNavMenu')
+     @include('includes/adminHeader')
 
      @yield('content')
  </body>

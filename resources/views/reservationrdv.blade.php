@@ -23,6 +23,7 @@
             $stagiaire = Session('currentStagiaire');
         @endphp
     @endif
+    
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
             <form method="post" action="/getstagiairebycindatenaissancereservation">

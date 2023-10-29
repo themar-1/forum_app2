@@ -50,7 +50,7 @@ class inscriptionController extends Controller
             $stagiaire->save();
 
             // return redirect()->route('invitation');
-            return redirect(route('inscription'))->with('success', 'Inscription enregistr&eacute;e!');
+            return redirect(route('inscription'))->with('success', 'Inscription enregistrée!');
         } else return redirect(route('inscription'))->with('success', 'CV est obligatoire pour s\'inscrire!');
     }
     public function annulerInscription(string $cin)

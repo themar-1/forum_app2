@@ -1,4 +1,5 @@
 @extends('layouts.adminLayout')
+@section('title', 'Tableau de bord')
 @section('content')
     @switch($temp)
         @case(1)
@@ -81,7 +82,7 @@
                                                 <div class="card-body">
                                                     <div class="row align-items-center m-b-25">
                                                         <div class="col">
-                                                            <h6 class="m-b-5 text-white">S'inscrire</h6>
+                                                            <h6 class="m-b-5 text-white">Stagiaires inscrits</h6>
                                                             <h3 class="m-b-0 text-white">
                                                                 @if (isset($loginaction))
                                                                     <h3 class="m-b-0 text-white">{{ count($loginaction) }}</h3>
@@ -124,7 +125,7 @@
 
 
                                         <!-- sessions-section start -->
-                                        @include('admin/TableStg')
+                                        @include('admin/TableStg', ['action' => 1])
 
                                     </div>
 
@@ -386,6 +387,204 @@
         @case(6)
             @include('includes.header', ['temp' => '6'])
         @break
+
+        @case(7)
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- [ breadcrumb ] start -->
+                                    <div class="page-header">
+                                        <div class="page-block">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="page-header-title">
+                                                        <h5>Home</h5>
+                                                    </div>
+                                                    <ul class="breadcrumb">
+                                                        <li class="breadcrumb-item"><a href="index.blade.php"><i
+                                                                    class="feather icon-home"></i></a></li>
+                                                        <li class="breadcrumb-item"><a href="#!">Analytics Dashboard</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- [ breadcrumb ] end -->
+                                    <!-- [ Main Content ] start -->
+                                    <div class="row">
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-red">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Entreprises</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $entreprises }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-building"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-blue">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Stagiaires</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $stagiaires }}</h3>
+
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-user-graduate"></i>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-green">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Stagiaires inscrits</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $confirmed }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-user-plus"></i>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-yellow">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Entretiens</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $entretiens }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-briefcase"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- row --}}
+                                    <div class="row">
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-red">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Confirmed</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $confirmed }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-building"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-blue">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Not confirmed</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $notConfirmed }}</h3>
+
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-user-graduate"></i>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-green">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Attended</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $attended }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-user-plus"></i>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <div class="card prod-p-card bg-c-yellow">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center m-b-25">
+                                                        <div class="col">
+                                                            <h6 class="m-b-5 text-white">Entretiens</h6>
+                                                            <h3 class="m-b-0 text-white">
+                                                                <h3 class="m-b-0 text-white">{{ $entretiens }}</h3>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-briefcase"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- data --}}
+
+                                    @include('admin/TableEfp')
+                                    @include('admin/tableStg', [
+                                        'stg' => $stgConfirmed,
+                                        'title' => 'List nominative des participants',
+                                    ])
+                                    @include('admin/tableStg', [
+                                        'stg' => $stgNotConfirmed,
+                                        'title' => 'List nominative des stagiaires qui n\'ont pas confirmé',
+                                    ])
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @break
+
     @endswitch
 
 @endsection

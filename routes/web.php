@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/student/delete/{id}', [AdminController::class, 'deleteStudent'])->name('student.delete');
     Route::get('/', [AdminController::class, "index"])->name('index');
     Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
+    Route::get('/analytics', [AdminController::class, "analytics"])->name('analytics');
     Route::post('/auth', [AdminController::class, "handleLogin"])->name('handleLogin');
     Route::post('/logout', [AdminController::class, "logout"])->name('logout');
     Route::group(['prefix' => 'backup', 'as' => 'backup.'], function () {
@@ -61,18 +62,11 @@ Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])-
 
 
 // Stagiaires list
-Route::resource('stagiaires', StagiaireController::class);
-Route::resource('entreprises', entrepriseController::class);
+// Route::resource('stagiaires', StagiaireController::class);
+// Route::resource('entreprises', entrepriseController::class);
 Route::post('/presence/{cin}', [StagiaireController::class, 'marquerPresent'])->name('marquerPresent');
 Route::post('/cv/download', [AdminController::class, 'downloadCv'])->name('downloadCV');
 Route::post('/cv/view', [AdminController::class, 'viewCv'])->name('viewCV');
-
-
-
-
-
-
-
 
 
 Route::resources([
