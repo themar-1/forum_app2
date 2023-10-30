@@ -97,24 +97,25 @@ class EntrepriseController extends Controller
     }
     public function dashboard()
     {
-        // Retrieve applied candidates for the current entreprise
+       
         $entreprise = Auth::guard('entreprise')->user();
         $entrepriseName = $entreprise->nom;
-         $logo= $entreprise->logo;
+        $logo = $entreprise->logo;
+        $entrepriseReprsenatant = $entreprise->representant;
     
         $appliedCandidates = Entretien::where('entreprise_id', $entreprise->id)
-            ->with('stagiaire')
+            ->with('stagiaire.etablissement') 
             ->get();
     
-            return view('entreprises.dashboard', compact('appliedCandidates', 'entrepriseName', 'logo'));
-
+        return view('entreprises.dashboard', compact('appliedCandidates', 'entrepriseName', 'logo', 'entrepriseReprsenatant'));
     }
+    
     public function logout(Request $request)
 {
-    Auth::guard('entreprise')->logout(); // Log out the authenticated entreprise user
-    $request->session()->invalidate(); // Invalidate the session
+    Auth::guard('entreprise')->logout(); 
+    $request->session()->invalidate(); 
 
-    return redirect()->route('login'); // Redirect to the desired page after logout
+    return redirect()->route('login'); 
 }
 public function showCv(Request $request)
 {
