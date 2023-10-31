@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     });
 });
 
-Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
+Route::post('/apply-for-interview/{stagiaire}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
 
 Route::get('/login', [EntrepriseController::class, 'loginIndex'])->name('login');
 Route::post('/login', [EntrepriseController::class, 'login'])->name('login.action');

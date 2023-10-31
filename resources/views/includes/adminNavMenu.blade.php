@@ -28,11 +28,11 @@
                     <a class="nav-link cursor-pointer"><span class="pcoded-micon"><i
                                 class="feather icon-user-plus"></i></span><span class="pcoded-mtext">Ajouter</span></a>
                     <ul class="pcoded-submenu">
-                        <li class=""><a href="{{ route('admin.ajouter.ajouter_A') }}" class="">Ajouter
+                        <li><a href="{{ route('admin.ajouter.ajouter_A') }}">Ajouter
                                 Admin</a></li>
-                        <li class=""><a href="{{ route('admin.ajouter.ajouter_E') }}" class="">Ajouter
+                        <li><a href="{{ route('admin.ajouter.ajouter_E') }}">Ajouter
                                 Entreprise</a></li>
-                        <li class=""><a href="{{ route('admin.ajouter.ajouter_S') }}" class="">Ajouter
+                        <li><a href="{{ route('admin.ajouter.ajouter_S') }}">Ajouter
                                 Stagiaires</a></li>
 
                     </ul>
