@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+
+
 use App\imports\StagiairesImport;
 use App\Exports\StagiairesExport;
 use App\imports\EntreprisesImport;
@@ -46,12 +48,17 @@ class BackupController extends Controller
         return Excel::download(new EtablissementsExport, 'etablissements.csv');
     }
 
+
+
     public function importEntreprises(Request $request)
     {
         $file = $request->file('file');
-        Excel::import(new EntreprisesImport, $file);
+        Excel::import(new EntreprisesImport, $file); 
         return back()->with('success', 'Entreprises imported successfully.');
     }
+
+
+
 
     public function exportEntreprises()
     {

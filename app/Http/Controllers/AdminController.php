@@ -182,7 +182,8 @@ class AdminController extends Controller
         $entreprises->activite = strip_tags($request->input('activite'));
         $entreprises->logo = strip_tags($request->input('logo'));
         $entreprises->web = strip_tags($request->input('web'));
-        // $entreprises->password = Hash::make(strip_tags($request->input('web')));
+        $entreprises->raisonabregee = "test";
+        $entreprises->raisonsociale ="TEST";
         $entreprises->email = strip_tags($request->input('email'));
         $entreprises->stand = strip_tags($request->input('stand'));
         $entreprises->save();

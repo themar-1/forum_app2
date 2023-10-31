@@ -36,4 +36,24 @@ class MessageController extends Controller
         }
 
 }
+    public function LireMessge($id)
+    {
+        $contents =  new sendmessge();
+        $contents = $contents->where('id', $id)->first();
+        $contents->update([
+            'status' => 1,
+        ]);
+
+        return view('admin.index', ['temp' => 9 , 'content' => $contents]);
+
+}
+    public function isMessge()
+    {
+        $contents =  new sendmessge();
+        $contents = $contents->where('status', 1)->where('status', );
+        
+
+        return view('admin.index', ['temp' => 9 , 'content' => $contents]);
+
+}
 }

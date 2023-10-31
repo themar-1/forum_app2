@@ -31,6 +31,8 @@ Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionControl
 
 
 Route::post('/SendMessge', [MessageController::class, "SendMessge"])->name('sendMessge');
+Route::get('/SendMessge/{id}', [MessageController::class, "LireMessge"])->name('LireMessge');
+
 
 
 // Admin Routes
