@@ -32,6 +32,7 @@
                 </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a class="nav-link cursor-pointer"><span class="pcoded-micon"><i
+
                         class="feather icon-user-plus"></i></span><span class="pcoded-mtext">Ajouter</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('admin.ajouter.ajouter_A') }}" class="">Ajouter
@@ -57,6 +58,31 @@
                                                         <span class="pcoded-micon">
                                                             <i class="feather icon-power"></i>
                                                         </span>
+
+                                class="feather icon-user-plus"></i></span><span class="pcoded-mtext">Ajouter</span></a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{ route('admin.ajouter.ajouter_A') }}">Ajouter
+                                Admin</a></li>
+                        <li><a href="{{ route('admin.ajouter.ajouter_E') }}">Ajouter
+                                Entreprise</a></li>
+                        <li><a href="{{ route('admin.ajouter.ajouter_S') }}">Ajouter
+                                Stagiaires</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>action</label>
+                </li>
+                <div>
+                    <li class="nav-item bg-danger">
+                        <a class="nav-link text-white " style="cursor: pointer">
+                            <form action="{{ route('admin.logout') }}" method="POST">
+                                @csrf
+                                <button class="py-1" style="all:unset">
+                                    <span class="pcoded-micon">
+                                        <i class="feather icon-power"></i>
+                                    </span>
+
                                     <span class="pcoded-mtext">Se déconnecter</span>
                                 </button>
                             </form>

@@ -9,18 +9,17 @@ use Illuminate\Support\Facades\Session;
 class reservationController extends Controller
 {
     public function getstagiairebycindatenaissance(Request $request)
-    {  
-         
-        $stagiaire=Stagiaire::where('cin',$request->get('cin'))
-                            ->where('datenaissance',$request->datenaissance)
-                            ->where('status','>',0)->first();
-                                        
-        if ( isset($stagiaire) )
-                Session::put('currentStagiaire', $stagiaire);
-        else Session::forget('currentStagiaire');
+    {
 
-        return view('reservationrdv',compact('stagiaire'));
+        // $stagiaire = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
+        //     ->select('stagiaires.*', 'etablissements.nom as efp')
+        //     ->where('cin', $request->get('cin'))
+        //     ->where('dateNaissance', $request->get('datenaissance'))->first();
 
+        // if (isset($stagiaire))
+        //     Session::put('currentStagiaire', $stagiaire);
+        // else Session::forget('currentStagiaire');
+
+        // return view('reservationrdv', compact('stagiaire'));
     }
- 
 }

@@ -24,4 +24,8 @@ class Stagiaire extends Model implements Authenticatable
         }
         return redirect()->back()->with(["error" => "Pas de CV trouvé."]);
     }
+    public function etablissement()
+    {
+        return $this->belongsTo(Etablissement::class, 'etablissement_id');
+    }
 }

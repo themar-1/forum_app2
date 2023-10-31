@@ -13,14 +13,38 @@ class inscriptionController extends Controller
     public function getstagiairebycindatenaissance(Request $request)
     {
 
+        // $stagiaire = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
+        //     ->select('stagiaires.*', 'etablissements.nom as efp')
+        //     ->where('cin', $request->get('cin'))
+        //     ->where('dateNaissance', $request->get('datenaissance'))->first();
+
+
+        // $stagiaire ? Session::put('currentStagiaire', $stagiaire) : Session::forget('currentStagiaire');
+        $this->stagiaireSession($request);
+        // $this->entretienSession();
+        // return view('inscription', compact('stagiaire'));
+        return view('inscription');
+    }
+
+    public function entretienSession()
+    {
+        $stagiaire = Session::get('currentStagiaire');
+        $entretien = Stagiaire::join('entretiens as e', 'stagiaires.id', '=', 'e.stagiaire_id')
+            ->select('e.entreprise_id')
+            ->where('stagiaires.id', $stagiaire->id)
+            ->get();
+        $stagiaire ? Session::put('currentEntretien', $entretien) : Session::forget('currentEntretien');
+    }
+    public function stagiaireSession($request)
+    {
         $stagiaire = Stagiaire::join('etablissements', 'etablissements.id', '=', 'stagiaires.etablissement_id')
             ->select('stagiaires.*', 'etablissements.nom as efp')
             ->where('cin', $request->get('cin'))
             ->where('dateNaissance', $request->get('datenaissance'))->first();
 
-        $stagiaire ? Session::put('currentStagiaire', $stagiaire) : Session::forget('currentStagiaire');
 
-        return view('inscription', compact('stagiaire'));
+        $stagiaire ? Session::put('currentStagiaire', $stagiaire) : Session::forget('currentStagiaire');
+        $this->entretienSession();
     }
     public function enregistrerInscription(Request $request)
     {
@@ -35,8 +59,9 @@ class inscriptionController extends Controller
         // $stagiaire->email = $request->get('email');
         $stagiaire->status = 1;
 
-        if (isset($stagiaire))
-            Session::put('currentStagiaire', $stagiaire);
+        // if (isset($stagiaire))
+        //     Session::put('currentStagiaire', $stagiaire);
+
 
         if ($request->hasFile('cv')) {
             $file = $request->file('cv');
@@ -48,6 +73,8 @@ class inscriptionController extends Controller
             $path = $file->store('resumes', 'local');
             $stagiaire->cv = $path;
             $stagiaire->save();
+            $this->stagiaireSession($request);
+
 
             // return redirect()->route('invitation');
             return redirect(route('inscription'))->with('success', 'Inscription enregistrée!');

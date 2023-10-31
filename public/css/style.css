@@ -395,6 +395,7 @@
 
 
 
+
 .wrapper_upload {
     margin: auto;
     max-width: 640px;
@@ -456,3 +457,32 @@
     color: #95afc0;
     opacity: 0.55;
   }
+=======
+.child-container{
+    display:flex;
+    justify-content:space-evenly;
+    align-items: center;
+    flex-wrap:wrap;
+    gap:30px;
+ }
+ .company-card {
+     width: 30%; 
+     height: 200px; 
+     margin-bottom: 20px; 
+ }
+ @media screen and (max-width: 768px) {
+     .child-container{
+       display:flex;
+       flex-direction: column;
+        justify-content:space-between;
+        align-items: center;
+        flex-wrap:wrap;
+        gap:60px;
+     }
+     .company-card {
+         width: 60%;
+         height: 200px; 
+ 
+     }
+ }
+

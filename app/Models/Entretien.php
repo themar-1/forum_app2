@@ -17,4 +17,6 @@ class Entretien extends Model
 {
     return $this->belongsTo(Stagiaire::class, 'stagiaire_id', 'id');
 } 
+
 }
+

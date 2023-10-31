@@ -26,8 +26,8 @@
                     class="nav-item nav-link @if ($menu === '4') active @endif">Contact</a>
             </div>
             @if ($menu !== '0')
-                <a href="{{ route('login') }}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Se
-                    connecter<i class="fa fa-arrow-right ms-3"></i></a>
+                <a href="{{ route('login') }}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Espace
+                    entreprise<i class="fa fa-arrow-right ms-3"></i></a>
             @endif
         </div>
     </nav>

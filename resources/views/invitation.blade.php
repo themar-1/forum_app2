@@ -24,12 +24,12 @@
             $stagiaire = Session('currentStagiaire');
         @endphp
     @endif
-    {{-- {{ $stagiaire }} --}}
 
     <div class="container-fluid bg-primary mb-2 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
-            <form method="post" action="/getstagiairebycindatenaissancereservation">
+            <form method="post" action="/getstagiairebycindatenaissanceinscription">
                 @csrf
+
                 <div class="row g-2">
                     <div class="col-md-10">
                         <div class="row g-2">
@@ -38,7 +38,7 @@
                                     value="{{ isset($stagiaire) ? $stagiaire->cin : '' }}" />
                             </div>
                             <div class="col-md-6">
-                                <input type="date" class="form-control border-0" name="datenaissance"
+                                <input type="text" class="form-control border-0" name="datenaissance"
                                     placeholder="Date naissance ?"
                                     value="{{ isset($stagiaire) ? $stagiaire->dateNaissance : '' }}" />
                             </div>
@@ -51,6 +51,7 @@
             </form>
         </div>
     </div>
+
 
     <!-- Fin recherche by cin et date naissance -->
 
@@ -140,4 +141,3 @@
 
     <!-- Aller en haut -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
