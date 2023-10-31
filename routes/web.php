@@ -8,6 +8,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', fn () => view('index'))->name('acceuil');
 Route::get('/about', fn () => view('about'))->name('about');
@@ -28,12 +29,17 @@ Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionControl
 
 
 
+
+Route::post('/SendMessge', [MessageController::class, "SendMessge"])->name('sendMessge');
+
+
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/student/delete/{id}', [AdminController::class, 'deleteStudent'])->name('student.delete');
     Route::get('/', [AdminController::class, "index"])->name('index');
     Route::get('/dashboard', [AdminController::class, "dashboard"])->name('dashboard');
     Route::get('/analytics', [AdminController::class, "analytics"])->name('analytics');
+    Route::get('/message', [AdminController::class, "message"])->name('message');
     Route::post('/auth', [AdminController::class, "handleLogin"])->name('handleLogin');
     Route::post('/logout', [AdminController::class, "logout"])->name('logout');
     Route::group(['prefix' => 'backup', 'as' => 'backup.'], function () {
@@ -49,16 +55,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/stagiaire', [AdminController::class, "ajouterStagiaire"])->name('ajouter_S');
         Route::get('/entreprise', [AdminController::class, "ajouterEntreprise"])->name('ajouter_E');
         Route::get('/admin', [AdminController::class, "ajouterAdmin"])->name('ajouter_A');
+        Route::get('/etablissement', [AdminController::class, "ajouterEtab"])->name('ajouter_etab');
         Route::post('/addAdmin', [AdminController::class, "add_a"])->name('add_A');
         Route::post('/addEntreprises', [AdminController::class, "add_e"])->name('add_E');
+        Route::post('/addStagiaire', [AdminController::class, "add_s"])->name('add_S');
+        Route::post('/addEtab', [AdminController::class, "add_etab"])->name('add_Etab');
     });
 });
 
 Route::post('/apply-for-interview/{entrepriseId}', [ApplicationController::class, "applyForInterview"])->name('apply-for-interview');
 
-Route::get('/login', [EntrepriseController::class, 'loginIndex'])->name('login');
-Route::post('/login', [EntrepriseController::class, 'login'])->name('login.action');
-Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
+
 
 
 // Stagiaires list
@@ -92,3 +99,9 @@ Route::get('/test-contact', function () {
         'message' => 'Je voulais vous dire que votre site est magnifique !'
     ]);
 });
+
+Route::get('/login', [EntrepriseController::class, 'loginIndex'])->name('login');
+Route::post('/login', [EntrepriseController::class, 'login'])->name('login.action');
+Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
+Route::get('/entreprise/logout', [EntrepriseController::class, 'logout'])->name('entreprise.logout');
+Route::post('/showcv', [EntrepriseController::class, 'showCv'])->name('showCVs');

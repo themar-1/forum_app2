@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('stagiaires')) {
         Schema::create('stagiaires', function (Blueprint $table) {
             $table->id();
             $table->string('matricule')->unique();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->foreign('etablissement_id')->references('id')->on('etablissements');
             $table->timestamps();
         });
+    }
     }
 
     /**

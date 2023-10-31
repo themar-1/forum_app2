@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entreprise;
+use App\Models\Entretien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
+
 
 class EntrepriseController extends Controller
 {
@@ -92,9 +95,31 @@ class EntrepriseController extends Controller
     {
         return view("auth.login");
     }
+    public function showCv(Request $request)
+    {
+        $fileName = $request->input("fileName");
+        if (Storage::disk('local')->exists($fileName)) {
+            $file = storage_path("app/" . $fileName);
+            $headers = [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            ];
+            return response()->file($file, $headers);
+        }
+        return redirect()->back()->with('error', 'CV file not found.');
+    }
     public function dashboard()
     {
+        // Retrieve applied candidates for the current entreprise
+        $entreprise = Auth::guard('entreprise')->user();
+        $entrepriseName = $entreprise->nom;
+         $logo= $entreprise->logo;
+    
+        $appliedCandidates = Entretien::where('entreprise_id', $entreprise->id)
+            ->with('stagiaire')
+            ->get();
+    
+            return view('entreprises.dashboard', compact('appliedCandidates', 'entrepriseName', 'logo'));
 
-        return view('entreprises.dashboard');
     }
 }

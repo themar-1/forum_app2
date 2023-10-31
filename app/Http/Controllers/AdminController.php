@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Stagiaire;
 use App\Models\Admin;
+use App\Models\Etablissement;
 use App\Models\Entreprise;
 use App\Models\Entretien;
+use App\Models\sendmessge;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,7 +108,7 @@ class AdminController extends Controller
             ->select('stagiaires.*', 'etablissements.nom as efp')
             ->where('status', '>', 0)
             ->get();
-        $dataByEFP  = DB::table('stagiaires as s')
+        $dataByEFP = DB::table('stagiaires as s')
             ->join('etablissements as e', 's.etablissement_id', '=', 'e.id')
             ->select(
                 'e.nom',
@@ -133,10 +137,15 @@ class AdminController extends Controller
 
         return view('admin.index', ['temp' => 3]);
     }
-    public function ajouterStagiaire()
+    public function ajouterEtab()
     {
 
-        return view('admin.index', ['temp' => 4]);
+        return view('admin.index', ['temp' => 6]);
+    }
+    public function ajouterStagiaire()
+    {
+        $etabs = Etablissement::all();
+        return view('admin.index', ['temp' => 5, 'etabs' => $etabs]);
     }
     public function add_a(Request $request)
     {
@@ -180,4 +189,69 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+    public function add_s(Request $request)
+    {
+
+        $request->validate([
+            'matricule' => 'required|string|max:255',
+            'cin' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'dateNaissance' => 'required|date_format:Y-m-d',
+            'email' => 'required|email|max:255',
+            'telephone' => 'required|numeric|min:10',
+            'filiere' => 'required|string|max:255',
+            'sexe' => 'required|in:F,H',
+        ]);
+        if (isset($request)) {
+
+            $stg = new Stagiaire();
+            $stg->matricule = strip_tags($request->matricule);
+            $stg->cin = strip_tags($request->cin);
+            $stg->nom = strip_tags($request->nom);
+            $stg->prenom = strip_tags($request->prenom);
+            $stg->dateNaissance = strip_tags($request->dateNaissance);
+            $stg->email = strip_tags($request->email);
+            $stg->telephone = strip_tags($request->telephone);
+            $stg->filiere = strip_tags($request->filiere);
+            $stg->sexe = strip_tags($request->sexe);
+            $stg->etablissement_id = 1;
+            $stg->save();
+
+            return redirect()->back();
+
+
+        }
+
+        return view('/');
+    }
+    public function add_etab(Request $request)
+    {
+
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+        if (isset($request)) {
+
+            $stg = new Etablissement();
+            $stg->nom = strip_tags($request->nom);
+            $stg->save();
+
+            return redirect()->back();
+
+
+        }
+
+        return view('/');
+    }
+    public function message()
+    {
+
+        $msgs = sendmessge::all();
+
+        return view('admin.index',['temp'=> 8 , 'msgs'=> $msgs]);
+    }
+
+    
+
 }

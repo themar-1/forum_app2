@@ -13,4 +13,8 @@ class Entretien extends Model
         'entreprise_id',
         'status',
     ];
+    public function stagiaire()
+{
+    return $this->belongsTo(Stagiaire::class, 'stagiaire_id', 'id');
+} 
 }
