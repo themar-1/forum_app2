@@ -97,36 +97,37 @@ class EntrepriseController extends Controller
     }
     public function dashboard()
     {
-       
+
         $entreprise = Auth::guard('entreprise')->user();
         $entrepriseName = $entreprise->nom;
         $logo = $entreprise->logo;
         $entrepriseReprsenatant = $entreprise->representant;
-    
+
         $appliedCandidates = Entretien::where('entreprise_id', $entreprise->id)
-            ->with('stagiaire.etablissement') 
+            ->with('stagiaire.etablissement')
             ->get();
-    
+
         return view('entreprises.dashboard', compact('appliedCandidates', 'entrepriseName', 'logo', 'entrepriseReprsenatant'));
     }
-    
-    public function logout(Request $request)
-{
-    Auth::guard('entreprise')->logout(); 
-    $request->session()->invalidate(); 
 
-    return redirect()->route('login'); 
-}
-public function showCv(Request $request)
-{
-    $fileName = $request->input("fileName");
-    if (Storage::disk('local')->exists($fileName)) {
-        $file = storage_path("app/" . $fileName);
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
-        ];
-        return response()->file($file, $headers);
-    } return redirect()->back()->with('error', 'CV file not found.');
-}
+    public function logout(Request $request)
+    {
+        Auth::guard('entreprise')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+    public function showCv(Request $request)
+    {
+        $fileName = $request->input("fileName");
+        if (Storage::disk('local')->exists($fileName)) {
+            $file = storage_path("app/" . $fileName);
+            $headers = [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            ];
+            return response()->file($file, $headers);
+        }
+        return redirect()->back()->with('error', 'CV file not found.');
+    }
 }

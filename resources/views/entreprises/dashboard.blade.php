@@ -18,28 +18,20 @@
                     </div>
                 </div>
                 <div class="p-4 text-black" style="background-color: #f8f9fa;">
-                    {{-- <div class="d-flex justify-content-end text-center py-1">
-                                <div>
-                                    <p class="mb-1 h5">253</p>
-                                    <p class="small text-muted mb-0">Photos</p>
-                                </div>
-                                <div class="px-3">
-                                    <p class="mb-1 h5">1026</p>
-                                    <p class="small text-muted mb-0">Followers</p>
-                                </div>
-                                <div>
-                                    <p class="mb-1 h5">478</p>
-                                    <p class="small text-muted mb-0">Following</p>
-                                </div>
-                            </div> --}}
+                    <div class="d-flex justify-content-end text-center py-1">
+                        <form action="{{ route('logout.action') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-danger">
+                                Deconnexion
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body w-100 m-auto p-4 text-black">
 
                     <table class="table table-hover m-b-0">
                         <thead>
                             <tr>
-
-
                                 <th><span>Nom Complet</span></th>
                                 <th><span>Téléphone</span></th>
                                 <th><span>Filiére</span></th>
