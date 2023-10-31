@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('entreprises', function (Blueprint $table) {
             $table->id();
-            $table->string('nom')->unique();
             $table->string('representant');
-            $table->string('activite');
             $table->string('raisonsociale')->nullable();
             $table->string('raisonabregee')->nullable();
             $table->string('logo')->nullable();

@@ -18,7 +18,7 @@ class Entreprise extends Model implements Authenticatable
         parent::boot();
 
         static::creating(function ($model) {
-            $model->password = Hash::make($model->nom . $model->representant);
+            $model->password = Hash::make($model->raisonabregee . "123@");
         });
     }
 

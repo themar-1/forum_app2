@@ -22,6 +22,7 @@
                                 <th><span>attended</span></th>
                                 <th><span>total</span></th>
                                 <th><span>Taux de confirmation %</span></th>
+                                <th><span>Taux de participation %</span></th>
 
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                 <td>{{ $data->status_2_count }}</td>
                                 <td>{{ $data->total }}</td>
                                 <td>{{ number_format(($data->status_1_count / $data->total) * 100, 2) }}%</td>
+                                <td>{{ number_format(($data->status_2_count / $data->total) * 100, 2) }}%</td>
                             </tr>
                             @endforeach
                             </tr>

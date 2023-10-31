@@ -57,17 +57,16 @@
     <!-- debut affichage du stagiaire et envoi de l'inscription -->
     @isset($stagiaire)
         <div class="container-xxl ">
-            <h4 class="text-center mb-2 wow fadeInUp" data-wow-delay="0.1s">Informations personnelles</h4>
+            <h4 class="text-center my-5 wow fadeInUp" data-wow-delay="0.1s">Informations personnelles</h4>
             <div class="row mt-1 g-4">
                 <div class="wow fadeInUp" data-wow-delay="0.5s">
                     <form action="/enregistrerinscription" method="post" enctype="multipart/form-data">
                         @method('PATCH')
                         @csrf
-
                         <div class="row g-3">
                             @if (session::has('success'))
                                 <div class="row">
-                                    <div class="alert alert-success fade show m-auto" role="alert">
+                                    <div class="alert col-md-4 text-center alert-success mb-4 fade show m-auto" role="alert">
                                         {{ session::get('success') }}
                                     </div>
                                 </div>
@@ -113,7 +112,7 @@
                                     </div>
                                 </div>
                                 @if ($stagiaire->status === 0)
-                                    <div class="col-md-4  ">
+                                    <div class="col-md-6 pe-md-5">
                                         <div class="form-floating">
                                             <input class="form-control" type="file" name="cv"
                                                 accept=".pdf, .doc, .docx">
@@ -122,20 +121,22 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-2 pe-md-5 ">
+                                    <div class="col-md-4 m-auto mt-4">
                                         <div class="form-floating">
                                             <button class="btn btn-primary w-100 py-3" type="submit">S'inscrire</button>
 
                                         </div>
                                     </div>
                             </div>
+                            {{-- {{ dd($stagiaire) }} --}}
                         @else
                             <div class="row mt-3">
                                 <div class="col-3 offset"></div>
                                 <div class="text-center col-6 pt-2 pb-2 ps-3 pe-3">
                                     <span> <b>Vous &egrave;tes d&eacute;ja inscrit(e) </b> </span>
-                                    <a class="btn btn-success" href="{{ route('invitation') }}">Imprimer mon invitation</a>
-                                    <a class="btn btn-danger" href="{{ route('invitation') }}">Annuler inscription</a>
+                                    <a class="btn btn-success" href="{{ route('reservationrdv') }}">Postuler pour une
+                                        entreprise</a>
+                                    {{-- <a class="btn btn-danger" href="{{ route('invitation') }}">Annuler inscription</a> --}}
                                 </div>
                                 {{-- <div class="col-4 offset"></div> --}}
                                 {{-- <div class="bg-primary text-center col-5 pt-2 pb-2 ps-5 pe-5">

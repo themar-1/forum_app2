@@ -58,6 +58,7 @@ class AdminController extends Controller
         $filePath = $request->input("fileName");
         return Storage::disk('resumes')->exists($filePath) ? Storage::disk("resumes")->download($filePath) : redirect()->back()->with('error', 'CV file not found.');
     }
+
     public function viewCv(Request $request)
     {
         $fileName = $request->input("fileName");
@@ -109,12 +110,23 @@ class AdminController extends Controller
             ->select(
                 'e.nom',
                 DB::raw('count(*) AS total'),
-                DB::raw('SUM(CASE WHEN s.status = 1 THEN 1 ELSE 0 END) AS status_1_count'),
+                DB::raw('SUM(CASE WHEN s.status in (1,2) THEN 1 ELSE 0 END) AS status_1_count'),
                 DB::raw('SUM(CASE WHEN s.status = 2 THEN 1 ELSE 0 END) AS status_2_count'),
                 DB::raw('SUM(CASE WHEN s.status = 0 THEN 1 ELSE 0 END) AS status_0_count')
             )
             ->groupBy('e.id', 'e.nom')
             ->get();
+        $interviewData = DB::table('entretiens as ent')
+            ->join('entreprises as e', 'ent.entreprise_id', '=', 'e.id')
+            ->join('stagiaires as s', 'ent.stagiaire_id', '=', 's.id')
+            ->join('etablissements as efp', 'efp.id', '=', 's.etablissement_id')
+            ->select(
+                's.nom',
+                's.prenom',
+                'e.raisonabregee as entreprise',
+                'efp.nom as etablissement',
+                'ent.status',
+            )->get();
         return view('admin.index', [
             'temp' => 7,
             'stagiaires' => $stagiaires,
@@ -126,6 +138,7 @@ class AdminController extends Controller
             'entretiens' => $entretiens,
             'stgNotConfirmed' => $stgNotConfirmed,
             'stgConfirmed' => $stgConfirmed,
+            'interviewData' => $interviewData,
         ]);
     }
     public function ajouterEntreprise()
