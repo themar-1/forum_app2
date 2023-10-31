@@ -1,14 +1,18 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\BackupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BackupController;
+
+
 
 Route::get('/', fn () => view('index'))->name('acceuil');
 Route::get('/about', fn () => view('about'))->name('about');
@@ -31,8 +35,6 @@ Route::patch('/enregistrerinscription', [App\Http\Controllers\inscriptionControl
 
 
 Route::post('/SendMessge', [MessageController::class, "SendMessge"])->name('sendMessge');
-Route::get('/SendMessge/{id}', [MessageController::class, "LireMessge"])->name('LireMessge');
-
 
 
 // Admin Routes

@@ -121,14 +121,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- product profit end -->
 
-
-                                        <!-- sessions-section start -->
+                                 
                                         @include('admin/TableStg', ['action' => 1])
 
                                     </div>
-                                    <!-- [ Main Content ] end -->
+
+                                  
                                 </div>
                             </div>
                         </div>
@@ -335,16 +334,18 @@
                                                             </div>
                                                             <!--<input type="file" id="file-upload">-->
                                                             <p>Drag and drop files here, or
-                                                                <a href="" id="file-browser_upload">browse</a> your
+                                                                <a href="#" id="file-browser_upload">browse</a> your
                                                                 computer.
                                                             </p>
                                                         </div>
                                                     </label>
+                                                    <input type="file" id="upETAB" class="d-none">
                                                     <div class="button-container">
-                                                        <input type="file" id="upETAB" class="d-none" name="file">
-                                                        <button type="submit" class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
+                                                        <button type="button"
+                                                            class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
                                                                 class="fas fa-cloud-upload-alt"></i> Emport</button>
-                                                        <a href="{{ route('admin.backup.exportEntreprises') }}" class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
+                                                        <a href="{{ route('admin.backup.exportEntreprises') }}"
+                                                            class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
                                                                 class="fas fa-cloud-download-alt"></i> Export</a>
                                                     </div>
                                                 </form>
@@ -548,9 +549,9 @@
                                                             </p>
                                                         </div>
                                                     </label>
-                                                    <input type="file" id="upETAB" class="d-none" name="file">
+                                                    <input type="file" id="upETAB" class="d-none">
                                                     <div class="button-container">
-                                                        <button type="submit"
+                                                        <button type="button"
                                                             class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
                                                                 class="fas fa-cloud-upload-alt"></i> Emport</button>
                                                         <a href="{{ route('admin.backup.exportStagiaires') }}"
@@ -637,9 +638,9 @@
                                                             </p>
                                                         </div>
                                                     </label>
-                                                    <input type="file" id="upETAB" class="d-none" name="file">
+                                                    <input type="file" id="upETAB" class="d-none">
                                                     <div class="button-container">
-                                                        <button type="submit"
+                                                        <button type="button"
                                                             class="w-25 btn btn-primary btn-lg btn-radius mt-4"><i
                                                                 class="fas fa-cloud-upload-alt"></i> Emport</button>
                                                         <a href="{{ route('admin.backup.exportEtablissements') }}"
@@ -881,12 +882,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <section>
+                                    <section >
                                         <div class="container my-5 py-5 text-dark">
                                             <div class="row d-flex justify-content-center">
                                                 <div class="col-md-12 col-lg-10 col-xl-8">
                                                     <div class="d-flex justify-content-between align-items-center mb-4">
-                                                        <h4 class="text-dark mb-0">Unread comments ({{ count($msgs) }})</h4>
+                                                        <h4 class="text-dark mb-0">Unread comments ({{count($msgs)}})</h4>
                                                         <div class="card">
                                                             <div class="card-body p-2 d-flex align-items-center">
                                                                 <h6 class="text-primary fw-bold small mb-0 me-1">Comments "ON"</h6>
@@ -900,47 +901,44 @@
                                                         </div>
                                                     </div>
                                                     @foreach ($msgs as $msg)
-                                                        @if (isset($msg))
-                                                            <div class="card mb-3">
-                                                                <div class="card-body">
-                                                                    <div class="d-flex flex-start">
-                                                                        <img class="rounded-circle shadow-1-strong me-3"
-                                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
-                                                                            alt="avatar" width="40" height="40" />
-                                                                        <div class="w-100">
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-center mb-3">
-                                                                                <b class="text-primary fw-bold mb-0">
-                                                                                    <span class="text-dark">
-                                                                                        {{ $msg->title }} </span><br>
-                                                                                    <strong>{{ $msg->name }}</strong>
+                                                        @if(isset($msg))
+                                                      
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <div class="d-flex flex-start">
+                                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                                                                        alt="avatar" width="40" height="40" />
+                                                                    <div class="w-100">
+                                                                        <div
+                                                                            class="d-flex justify-content-between align-items-center mb-3">
+                                                                            <b class="text-primary fw-bold mb-0">
+                                                                                <span class="text-dark">
+                                                                                  {{ $msg->title }} </span><br>
+                                                                                 <strong>{{ $msg->name }}</strong>
                                                                                 </b>
-
-                                                                                <p class="mb-0"> {{ $msg->created_at }}</p>
-                                                                            </div>
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-center">
-                                                                                <p class="small mb-0" style="color: #aaa;">
-                                                                                    <a href="#!" class="link-grey">Remove</a>
-                                                                                    •
-                                                                                    <a href="{{ route('LireMessge', ['id' => $msg->id]) }}"
-                                                                                        class="link-grey">Reply</a>
-                                                                                    •
-                                                                                </p>
-                                                                                <div class="d-flex flex-row">
-                                                                                    <i class="fas fa-star text-warning me-2"></i>
-                                                                                    <i class="far fa-check-circle"
-                                                                                        style="color: #aaa;"></i>
-                                                                                </div>
+                                                                            
+                                                                            <p class="mb-0">    {{ $msg->created_at }}</p>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <p class="small mb-0" style="color: #aaa;">
+                                                                                <a href="#!" class="link-grey">Remove</a> •
+                                                                                <a href="#!" class="link-grey">Reply</a> •
+                                                                            </p>
+                                                                            <div class="d-flex flex-row">
+                                                                                <i class="fas fa-star text-warning me-2"></i>
+                                                                                <i class="far fa-check-circle"
+                                                                                    style="color: #aaa;"></i>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
                                                         @endif
                                                     @endforeach
 
-
+                                                    
 
                                                     {{-- <div class="card mb-3">
                                                         <div class="card-body">
@@ -977,53 +975,6 @@
                                             </div>
                                         </div>
                                     </section>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @break
-
-        @case(9)
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-                                <div class="page-wrapper">
-                                    <!-- [ breadcrumb ] start -->
-                                    <div class="page-header">
-                                        <div class="page-block">
-                                            <div class="row align-items-center">
-                                                <div class="col-md-12">
-                                                    <div class="page-header-title">
-                                                        <h5>Box</h5>
-                                                    </div>
-                                                    <ul class="breadcrumb">
-                                                        <li class="breadcrumb-item"><a href="index.blade.php"><i
-                                                                    class="feather icon-home"></i></a></li>
-                                                        <li class="breadcrumb-item"><a href="">Message</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="container mt-5">
-                                        <div class="row">
-
-                                            <div class="col-sm-8 m-auto">
-                                                <h2>{{ $content->title }}</h2>
-                                                <h5>C{{ $content->name }}</h5>
-                                                <p>
-                                                    {{ $content->text }}
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
                             </div>
