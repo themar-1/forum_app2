@@ -59,6 +59,9 @@ Route::post('/apply-for-interview/{stagiaire}', [ApplicationController::class, "
 Route::get('/login', [EntrepriseController::class, 'loginIndex'])->name('login');
 Route::post('/login', [EntrepriseController::class, 'login'])->name('login.action');
 Route::get('/entreprise/dashboard', [EntrepriseController::class, 'dashboard'])->name('entreprise.dashboard');
+Route::get('/entreprise/logout', [EntrepriseController::class, 'logout'])->name('entreprise.logout');
+Route::post('/showcv', [EntrepriseController::class, 'showCv'])->name('showCVs');
+
 
 
 // Stagiaires list
